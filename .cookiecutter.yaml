@@ -1,0 +1,10 @@
+default_context:
+    author_name: "Sean Meharry"
+    author_email: "seanm@alleninstitute.org"
+    hosting_github_username_or_org: "bioio-devs"
+    project_name: "bioio-imageio"
+    project_slug: "bioio-imageio"
+    python_slug: "bioio_imageio"
+    project_short_description: "A BioIO reader plugin for reading simple image formats using imageio."
+    hosting_pypi_username: "bioio-devs"
+    license: "MIT License"
