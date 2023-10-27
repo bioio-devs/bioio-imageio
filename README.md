@@ -1,7 +1,7 @@
 # bioio-imageio
 
-[![Build Status](https://github.com/bioio-devs/bioio-imageio/workflows/CI/badge.svg)](https://github.com/bioio-devs/bioio-imageio/actions)
-[![Documentation](https://github.com/bioio-devs/bioio-imageio/workflows/Documentation/badge.svg)](https://bioio-devs.github.io/bioio-imageio)
+[![Build Status](https://github.com/bioio-devs/bioio-imageio/actions/workflows/ci.yml/badge.svg)](https://github.com/bioio-devs/bioio-imageio/actions)
+[![Documentation](https://github.com/bioio-devs/bioio-imageio/actions/workflows/docs.yml/badge.svg)](https://bioio-devs.github.io/bioio-imageio)
 
 A BioIO reader plugin for reading simple image formats using imageio.
 
