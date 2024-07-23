@@ -15,10 +15,10 @@ from .conftest import LOCAL_RESOURCES_DIR
 @pytest.mark.parametrize(
     "filename, set_scene, expected_shape, expected_dims_order",
     [
-        ("example.bmp", "Image:0", (480, 640, 4), "YXS"),
+        ("example.bmp", "Image:0", (480, 640, 3), "YXS"),
         ("example.png", "Image:0", (800, 537, 4), "YXS"),
         ("example.jpg", "Image:0", (452, 400, 3), "YXS"),
-        ("example.gif", "Image:0", (72, 268, 268, 4), "TYXS"),
+        ("example.gif", "Image:0", (72, 268, 268, 3), "TYXS"),
         (
             "example_invalid_frame_count.mp4",
             "Image:0",
