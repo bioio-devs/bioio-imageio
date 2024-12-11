@@ -77,7 +77,8 @@ class ReaderMetadata(bioio_base.reader_metadata.ReaderMetadata):
             "mpo",
             "msp",
             "pdf",
-            "png" "ppm",
+            "png",
+            "ppm",
             "ps",
             "zif",
         ]
