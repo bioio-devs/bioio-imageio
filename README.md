@@ -7,7 +7,7 @@
 
 A BioIO reader plugin for reading [all these formats](https://imageio.readthedocs.io/en/stable/formats/index.html) using `imageio`
 
----
+--- 
 
 
 ## Documentation
