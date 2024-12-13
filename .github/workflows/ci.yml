@@ -64,6 +64,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install .[test]
+    - name: Install ffmpeg (macOS only)
+      if: matrix.os == 'macOS-latest'
+      run: |
+        brew install ffmpeg
     - uses: actions/cache@v4
       id: cache
       with:
