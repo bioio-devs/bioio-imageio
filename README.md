@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/bioio-devs/bioio-imageio/actions/workflows/ci.yml/badge.svg)](https://github.com/bioio-devs/bioio-imageio/actions)
 [![PyPI version](https://badge.fury.io/py/bioio-imageio.svg)](https://badge.fury.io/py/bioio-imageio)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9,3.10,3.11-blue.svg)](https://www.python.org/downloads/release/python-390/)
+[![Python 3.10–3.13](https://img.shields.io/badge/python-3.10--3.13-blue.svg)](https://www.python.org/downloads/)
 
 A BioIO reader plugin for reading [all these formats](https://imageio.readthedocs.io/en/stable/formats/index.html) using `imageio`
 
