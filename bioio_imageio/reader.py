@@ -504,10 +504,11 @@ class Reader(reader.Reader):
         exceptions.UnsupportedFileFormatError
             The file could not be read or is not supported.
         """
-        # Read image
         with self._fs.open(self._path) as open_resource:
             reader = imageio.get_reader(
-                open_resource, format=self.extension, mode=self.imageio_read_mode
+                open_resource,
+                format=self.extension,
+                mode=self.imageio_read_mode,
             )
 
             # Store image length
@@ -522,30 +523,58 @@ class Reader(reader.Reader):
             if image_length == 1:
                 image_data = reader.get_data(0)
 
-            # Handle many image formats like gif, mp4, etc
+            # Handle many-image formats like gif, mp4, etc
             elif image_length > 1:
-                # Read and stack all frames
-                frames = []
-                for frame in reader:
-                    frames.append(frame)
+                # 1) Read all frames into a list of numpy arrays
+                frames = [np.asarray(frame) for frame in reader]
 
-                image_data = np.stack(frames)
+                # 2) Compute the maximum shape across all frames
+                all_shapes = [f.shape for f in frames]
+                max_ndim = max(len(s) for s in all_shapes)
+                max_shape = tuple(
+                    max((s[i] if i < len(s) else 0) for s in all_shapes)
+                    for i in range(max_ndim)
+                )
+
+                # 3) Pad each frame up to max_shape
+                padded = []
+                for f in frames:
+                    pad_width = []
+                    for axis, target in enumerate(max_shape):
+                        current = f.shape[axis] if axis < f.ndim else 0
+                        pad_after = target - current
+                        pad_width.append((0, pad_after))
+                    f_padded = np.pad(
+                        f,
+                        pad_width=pad_width,
+                        mode="constant",
+                        constant_values=0,
+                    )
+                    padded.append(f_padded)
+
+                # 4) Stack into one array of shape (T, *max_shape)
+                image_data = np.stack(padded)
+
+            else:
+                raise exceptions.UnsupportedFileFormatError(
+                    self.__class__.__name__, self.extension
+                )
 
             # Get basic metadata
             metadata = reader.get_meta_data()
 
-            # Create extra metadata from assumptions based off image data
-            dims, coords = self._unpack_dims_and_coords(
-                image_data=image_data,
-                metadata=metadata,
-                scene_id=self.current_scene,
-                dim_order=self._dim_order,
-                channel_names=self._channel_names,
-            )
+        # Now unpack dims/coords, etc.
+        dims, coords = self._unpack_dims_and_coords(
+            image_data=image_data,
+            metadata=metadata,
+            scene_id=self.current_scene,
+            dim_order=self._dim_order,
+            channel_names=self._channel_names,
+        )
 
-            return xr.DataArray(
-                image_data,
-                dims=dims,
-                coords=coords,
-                attrs={constants.METADATA_UNPROCESSED: metadata},
-            )
+        return xr.DataArray(
+            image_data,
+            dims=dims,
+            coords=coords,
+            attrs={constants.METADATA_UNPROCESSED: metadata},
+        )
