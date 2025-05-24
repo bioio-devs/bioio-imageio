@@ -536,7 +536,9 @@ class Reader(reader.Reader):
                     for i in range(max_ndim)
                 )
 
-                # 3) Pad each frame up to max_shape
+                # 3) Pad each frame up to max_shape. We do this becasue sometimes
+                # particular frames are missing full dimensionality and in order to
+                # stack them they need to all have the same shape.
                 padded = []
                 for f in frames:
                     pad_width = []
