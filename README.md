@@ -40,6 +40,68 @@ import bioio_imageio
 img = BioImage("my_file.mp4", reader=bioio_imageio.Reader)
 img.data
 ```
+## TwoDWriter
+
+Import the writer:
+
+```python
+from bioio_imageio.writers import TwoDWriter
+```
+
+The `TwoDWriter` writes 2D (YX) or 3D (YXS) image data via `imageio`.
+
+### Examples from Tests
+
+```python
+import numpy as np
+from bioio_imageio.writers import TwoDWriter
+
+# RGB image, inferred YXS
+image = np.zeros((100, 100, 3), dtype=np.uint8)
+TwoDWriter.save(image, "output.png")
+```
+
+```python
+# Channels-first array (S,Y,X) with explicit dim_order
+image = np.zeros((3, 100, 100), dtype=np.uint8)
+TwoDWriter.save(image, "output.bmp", "SYX")
+```
+
+---
+
+## TimeseriesWriter
+
+Import the writer:
+
+```python
+from bioio_imageio.writers import TimeseriesWriter
+```
+
+The `TimeseriesWriter` writes 3D (T,Y,X) or 4D (T,Y,X,S) data as animated formats via `imageio`.
+
+### Examples from Tests
+
+```python
+import numpy as np
+from bioio_imageio.writers import TimeseriesWriter
+
+# Grayscale GIF (T,Y,X)
+image = np.zeros((30, 100, 100), dtype=np.uint8)
+TimeseriesWriter.save(image, "output.gif")
+```
+
+```python
+# Custom dim_order (S,Y,T,X) for GIF
+image = np.zeros((3, 100, 30, 100), dtype=np.uint8)
+TimeseriesWriter.save(image, "output.gif", "SYTX")
+```
+
+```python
+# MP4 output for 30 frames of 112x112
+image = np.zeros((30, 112, 112), dtype=np.uint8)
+TimeseriesWriter.save(image, "output.mp4")
+```
+
 
 ## Issues
 [_Click here to view all open issues in bioio-devs organization at once_](https://github.com/search?q=user%3Abioio-devs+is%3Aissue+is%3Aopen&type=issues&ref=advsearch) or check this repository's issue tab.
