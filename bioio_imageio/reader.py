@@ -94,10 +94,6 @@ class Reader(reader.Reader):
                 with imageio.get_reader(open_resource, format=extension, mode=mode):
                     return True
 
-        # Exceptions that are raised by imageio for unsupported file types
-        except (ValueError, IndexError):
-            return False
-
         # Some FFMPEG formats and reading just suck
         # If they can't get metadata remotely they throw an OSError because ffmpeg is
         # ran through subprocess (I believe)
@@ -112,6 +108,8 @@ class Reader(reader.Reader):
         # /tmp/imageio_cbof2u37: Invalid data found when processing input
         except OSError:
             raise IOError(REMOTE_READ_FAIL_MESSAGE.format(path=path))
+        except Exception as e:
+            raise exceptions.UnsupportedFileFormatError("bioio-imageio", path, str(e))
 
     def __init__(
         self,
