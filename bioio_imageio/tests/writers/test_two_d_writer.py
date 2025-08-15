@@ -9,6 +9,7 @@ import imageio
 import numpy as np
 import pytest
 
+from ... import Reader
 from ...writers import TwoDWriter
 from ..conftest import array_constructor
 
@@ -77,3 +78,8 @@ def test_two_d_writer(
 
             # Check basics
             assert data.shape == read_shape
+
+    assert Reader.is_supported_image(save_uri)
+    reader = Reader(str(save_uri))
+    assert reader is not None
+    assert reader.shape == read_shape

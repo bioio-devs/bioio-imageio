@@ -9,6 +9,7 @@ import imageio
 import numpy as np
 import pytest
 
+from ... import Reader
 from ...writers import TimeseriesWriter, TwoDWriter
 from ..conftest import array_constructor
 
@@ -114,6 +115,19 @@ def test_timeseries_writer(
     if data.ndim == 4:
         assert data.shape[3] in (3, 4), f"Expected 3 or 4 channels, got {data.shape[3]}"
 
+    assert Reader.is_supported_image(save_uri)
+    reader = Reader(str(save_uri))
+    assert reader is not None
+    assert (
+        reader.shape[0] == arr.shape[0]
+    ), f"Expected {arr.shape[0]} frames, got {reader.shape[0]}"
+    assert (
+        reader.shape[1] == arr.shape[1]
+    ), f"Expected Y={arr.shape[1]}, got {reader.shape[1]}"
+    assert (
+        reader.shape[2] == arr.shape[2]
+    ), f"Expected X={arr.shape[2]}, got {reader.shape[2]}"
+
 
 @array_constructor
 @pytest.mark.parametrize(
@@ -189,3 +203,7 @@ def test_timeseries_writer_ffmpeg(
             assert data.shape[-1] <= 4
 
             # Can't do "easy" testing because compression + shape mismatches on RGB data
+    assert Reader.is_supported_image(save_uri)
+    reader = Reader(str(save_uri))
+    assert reader is not None
+    assert reader.shape == read_shape
