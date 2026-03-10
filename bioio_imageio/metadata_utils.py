@@ -17,7 +17,7 @@ def generate_ome_image_id(image_id: Union[str, int]) -> str:
     ome_image_id: str
         The OME standard for image IDs.
     """
-    return f"Image: {image_id}"
+    return f"Image:{image_id}"  # noqa: E231
 
 
 def generate_ome_channel_id(image_id: str, channel_id: Union[str, int]) -> str:
