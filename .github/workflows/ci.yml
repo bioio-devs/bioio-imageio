@@ -41,7 +41,7 @@ jobs:
     uses: bioio-devs/bioio-base/.github/workflows/shared_test.yml@main
     with:
       test_checkout_lfs: true
-      install_ffmpeg_macos: true
+      install_ffmpeg_macos: false
 
   # Check package performance
   benchmark:
