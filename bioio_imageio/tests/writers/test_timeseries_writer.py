@@ -99,17 +99,17 @@ def test_timeseries_writer(
     data = np.stack(frames)
 
     # Validate number of frames
-    assert (
-        data.shape[0] == arr.shape[0]
-    ), f"Expected {arr.shape[0]} frames, got {data.shape[0]}"
+    assert data.shape[0] == arr.shape[0], (
+        f"Expected {arr.shape[0]} frames, got {data.shape[0]}"
+    )
 
     # Validate spatial dimensions
-    assert (
-        data.shape[1] == arr.shape[1]
-    ), f"Expected Y={arr.shape[1]}, got {data.shape[1]}"
-    assert (
-        data.shape[2] == arr.shape[2]
-    ), f"Expected X={arr.shape[2]}, got {data.shape[2]}"
+    assert data.shape[1] == arr.shape[1], (
+        f"Expected Y={arr.shape[1]}, got {data.shape[1]}"
+    )
+    assert data.shape[2] == arr.shape[2], (
+        f"Expected X={arr.shape[2]}, got {data.shape[2]}"
+    )
 
     # Validate channel depth (3 or 4 if present)
     if data.ndim == 4:
@@ -118,15 +118,15 @@ def test_timeseries_writer(
     assert Reader.is_supported_image(save_uri)
     reader = Reader(str(save_uri))
     assert reader is not None
-    assert (
-        reader.shape[0] == arr.shape[0]
-    ), f"Expected {arr.shape[0]} frames, got {reader.shape[0]}"
-    assert (
-        reader.shape[1] == arr.shape[1]
-    ), f"Expected Y={arr.shape[1]}, got {reader.shape[1]}"
-    assert (
-        reader.shape[2] == arr.shape[2]
-    ), f"Expected X={arr.shape[2]}, got {reader.shape[2]}"
+    assert reader.shape[0] == arr.shape[0], (
+        f"Expected {arr.shape[0]} frames, got {reader.shape[0]}"
+    )
+    assert reader.shape[1] == arr.shape[1], (
+        f"Expected Y={arr.shape[1]}, got {reader.shape[1]}"
+    )
+    assert reader.shape[2] == arr.shape[2], (
+        f"Expected X={arr.shape[2]}, got {reader.shape[2]}"
+    )
 
 
 @array_constructor
